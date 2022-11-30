@@ -80,14 +80,6 @@ do {
               },
             ]);
 
-            if (printReciept.recieptPrint) {
-              console.log(
-                chalk.greenBright(
-                  receipt(answer.userName, avBalance, withDrawBl.wd)
-                )
-              );
-            }
-
             const usage = await inquirer.prompt([
               {
                 name: "useAgain",
