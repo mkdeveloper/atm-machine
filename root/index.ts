@@ -44,7 +44,7 @@ do {
       ]);
 
       if (select.option === "Balance") {
-        console.log(chalk.blueBright(`Your Balance is $ ${avBalance}`));
+        console.log(chalk.yellowBright(`Your Balance is $ ${avBalance}`));
 
         const usage = await inquirer.prompt({
           name: "useAgain",
