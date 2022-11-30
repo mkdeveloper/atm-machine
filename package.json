@@ -1,6 +1,6 @@
 {
   "name": "mk-atm",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Typescript Project 02, ATM Machine",
   "main": "index.js",
   "type": "module",
