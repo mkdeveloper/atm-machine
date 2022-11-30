@@ -1,6 +1,7 @@
 #! usr/bin/env node
 import inquirer from "inquirer";
 import chalk from "chalk";
+import receipt from "./withDrawrep.js";
 import tsreceipt from "./transferreceipt.js";
 import welcome from "./welcome.js";
 let pinCheck = true;
@@ -107,23 +108,22 @@ do {
                     if (tranferWise.transfer >= avBalance) {
                         console.log(chalk.redBright(`Entered Amount Should be less than the available Balance $ ${avBalance}`));
                     }
-                    else {
-                        if (!isNaN(tranferWise.transfer)) {
-                            avBalance -= tranferWise.transfer;
-                            console.log(chalk.greenBright(tsreceipt(answer.userName, avBalance, tranferWise.transfer, tranferWise.ModeOfTrans, tranferWise.ACno)));
-                        }
-                        else {
-                            console.log(chalk.redBright("Please Enter Numbers only"));
-                        }
-                        continueTransfer = false;
-                        const usage = await inquirer.prompt({
-                            name: "useAgain",
-                            type: "confirm",
-                            message: "Continue using ATM",
-                        });
-                        continued = usage.useAgain;
+                    else if (!isNaN(tranferWise.transfer)) {
+                        avBalance -= tranferWise.transfer;
+                        console.log(chalk.greenBright(tsreceipt(answer.userName, avBalance, tranferWise.transfer, tranferWise.ModeOfTrans, tranferWise.ACno)));
+                        continueTransfer = true;
                     }
-                } while (continueTransfer);
+                    else {
+                        console.log(chalk.redBright("Please Enter Numbers only"));
+                        continueTransfer = false;
+                    }
+                } while (!continueTransfer);
+                const usage = await inquirer.prompt({
+                    name: "useAgain",
+                    type: "confirm",
+                    message: "Continue using ATM",
+                });
+                continued = usage.useAgain;
             }
         } while (continued);
         msg = `

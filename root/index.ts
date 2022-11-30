@@ -1,6 +1,7 @@
 #! usr/bin/env node
 import inquirer from "inquirer";
 import chalk from "chalk";
+import receipt from "./withDrawrep.js";
 import tsreceipt from "./transferreceipt.js";
 import welcome from "./welcome.js";
 
@@ -80,6 +81,14 @@ do {
               },
             ]);
 
+            if (printReciept.recieptPrint) {
+              console.log(
+                chalk.greenBright(
+                  receipt(answer.userName, avBalance, withDrawBl.wd)
+                )
+              );
+            }
+
             const usage = await inquirer.prompt([
               {
                 name: "useAgain",
@@ -95,6 +104,7 @@ do {
         } while (possibleDraw);
       } else if (select.option === "Transfer") {
         let continueTransfer = true;
+
         do {
           const tranferWise = await inquirer.prompt([
             {
@@ -122,35 +132,33 @@ do {
                 `Entered Amount Should be less than the available Balance $ ${avBalance}`
               )
             );
-          } else {
-            if (!isNaN(tranferWise.transfer)) {
-              avBalance -= tranferWise.transfer;
-              console.log(
-                chalk.greenBright(
-                  tsreceipt(
-                    answer.userName,
-                    avBalance,
-                    tranferWise.transfer,
-                    tranferWise.ModeOfTrans,
-                    tranferWise.ACno
-                  )
+          } else if (!isNaN(tranferWise.transfer)) {
+            avBalance -= tranferWise.transfer;
+            console.log(
+              chalk.greenBright(
+                tsreceipt(
+                  answer.userName,
+                  avBalance,
+                  tranferWise.transfer,
+                  tranferWise.ModeOfTrans,
+                  tranferWise.ACno
                 )
-              );
-            } else {
-              console.log(chalk.redBright("Please Enter Numbers only"));
-            }
-
+              )
+            );
+            continueTransfer = true;
+          } else {
+            console.log(chalk.redBright("Please Enter Numbers only"));
             continueTransfer = false;
-
-            const usage = await inquirer.prompt({
-              name: "useAgain",
-              type: "confirm",
-              message: "Continue using ATM",
-            });
-
-            continued = usage.useAgain;
           }
-        } while (continueTransfer);
+        } while (!continueTransfer);
+
+        const usage = await inquirer.prompt({
+          name: "useAgain",
+          type: "confirm",
+          message: "Continue using ATM",
+        });
+
+        continued = usage.useAgain;
       }
     } while (continued);
 
