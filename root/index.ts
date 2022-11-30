@@ -1,7 +1,6 @@
 #! usr/bin/env node
 import inquirer from "inquirer";
 import chalk from "chalk";
-import receipt from "./receipts.js";
 import tsreceipt from "./transferreceipt.js";
 import welcome from "./welcome.js";
 
