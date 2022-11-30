@@ -1,0 +1,37 @@
+{
+  "name": "mk-atm",
+  "version": "1.0.0",
+  "description": "Typescript Project 02, ATM Machine",
+  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "mk-atm": "./bin/index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mkdeveloper/atm-machine.git"
+  },
+  "keywords": [
+    "atm",
+    "atm-machine",
+    "mk-atm"
+  ],
+  "author": "Muhammad Khubaib",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mkdeveloper/atm-machine/issues"
+  },
+  "homepage": "https://github.com/mkdeveloper/atm-machine#readme",
+  "dependencies": {
+    "chalk": "^5.1.2",
+    "chalk-animation": "^2.0.3",
+    "inquirer": "^9.1.4"
+  },
+  "devDependencies": {
+    "@types/chalk-animation": "^1.6.1",
+    "@types/inquirer": "^9.0.3"
+  }
+}
