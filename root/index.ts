@@ -2,8 +2,8 @@
 import inquirer from "inquirer";
 import chalk from "chalk";
 import receipt from "./withDrawrep.js";
-import tsreceipt from "./transferreceipt.js";
 import welcome from "./welcome.js";
+import tsreceipt from "./transferreceipt.js";
 
 let pinCheck = true;
 
@@ -45,14 +45,6 @@ do {
 
       if (select.option === "Balance") {
         console.log(chalk.yellowBright(`Your Balance is $ ${avBalance}`));
-
-        const usage = await inquirer.prompt({
-          name: "useAgain",
-          type: "confirm",
-          message: "Continue using ATM",
-        });
-
-        continued = usage.useAgain;
       } else if (select.option === "Withdraw") {
         let possibleDraw = true;
 
@@ -88,16 +80,6 @@ do {
                 )
               );
             }
-
-            const usage = await inquirer.prompt([
-              {
-                name: "useAgain",
-                type: "confirm",
-                message: "Continue using ATM",
-              },
-            ]);
-
-            continued = usage.useAgain;
           } else {
             console.log(chalk.redBright("Please enter Numbers Only"));
           }
@@ -126,40 +108,49 @@ do {
             },
           ]);
 
-          if (tranferWise.transfer >= avBalance) {
-            console.log(
-              chalk.redBright(
-                `Entered Amount Should be less than the available Balance $ ${avBalance}`
-              )
-            );
-          } else if (!isNaN(tranferWise.transfer)) {
+          if (
+            tranferWise.transfer < avBalance &&
+            !isNaN(tranferWise.transfer)
+          ) {
             avBalance -= tranferWise.transfer;
-            console.log(
-              chalk.greenBright(
-                tsreceipt(
-                  answer.userName,
-                  avBalance,
-                  tranferWise.transfer,
-                  tranferWise.ModeOfTrans,
-                  tranferWise.ACno
-                )
-              )
-            );
-            continueTransfer = true;
+            const printReciept = await inquirer.prompt({
+              name: "printIt",
+              type: "confirm",
+              message: "Do you want Receipt: ",
+            });
+
+            if (printReciept.printIt) {
+              const defined: string = tsreceipt(
+                answer.userName,
+                avBalance,
+                tranferWise.transfer,
+                tranferWise.ModeOfTrans,
+                tranferWise.acNo
+              );
+              console.log(chalk.greenBright(defined));
+              continueTransfer = true;
+            }
           } else {
-            console.log(chalk.redBright("Please Enter Numbers only"));
+            if (isNaN(tranferWise.transfer)) {
+              console.log(chalk.redBright("Please Enter Numbers Only"));
+            } else {
+              console.log(
+                chalk.redBright(
+                  "Amount entered should be lower then balance $ " + avBalance
+                )
+              );
+            }
             continueTransfer = false;
           }
         } while (!continueTransfer);
-
-        const usage = await inquirer.prompt({
-          name: "useAgain",
-          type: "confirm",
-          message: "Continue using ATM",
-        });
-
-        continued = usage.useAgain;
       }
+      const usage = await inquirer.prompt({
+        name: "useAgain",
+        type: "confirm",
+        message: "Continue using ATM",
+      });
+
+      continued = usage.useAgain;
     } while (continued);
 
     msg = `
