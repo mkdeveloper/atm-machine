@@ -125,7 +125,7 @@ do {
                 avBalance,
                 tranferWise.transfer,
                 tranferWise.ModeOfTrans,
-                tranferWise.acNo
+                tranferWise.ACno
               );
               console.log(chalk.greenBright(defined));
               continueTransfer = true;

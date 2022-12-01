@@ -100,7 +100,7 @@ do {
                             message: "Do you want Receipt: ",
                         });
                         if (printReciept.printIt) {
-                            const defined = tsreceipt(answer.userName, avBalance, tranferWise.transfer, tranferWise.ModeOfTrans, tranferWise.acNo);
+                            const defined = tsreceipt(answer.userName, avBalance, tranferWise.transfer, tranferWise.ModeOfTrans, tranferWise.ACno);
                             console.log(chalk.greenBright(defined));
                             continueTransfer = true;
                         }
